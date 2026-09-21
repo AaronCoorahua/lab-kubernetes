@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: flask-app
+  labels:
+    app: flask
+spec:
+  replicas: 2                # Número deseado de Pods
+  selector:
+    matchLabels:
+      app: flask             # Qué Pods gestiona este Deployment
+  template:                  # Plantilla del Pod que se replica
+    metadata:
+      labels:
+        app: flask
+    spec:
+      containers:
+        - name: flask
+          image: flask-k8s-app:1.0
+          imagePullPolicy: IfNotPresent   # Usa la imagen local si existe
+          ports:
+            - containerPort: 5000
+          env:
+            - name: APP_VERSION
+              value: "1.0"
+          readinessProbe:               # Solo recibe tráfico cuando responde /health
+            httpGet:
+              path: /health
+              port: 5000
+            initialDelaySeconds: 3
+            periodSeconds: 5
+          resources:                    # Necesario para el HPA (reto final)
+            requests:
+              cpu: "100m"
+              memory: "64Mi"
+            limits:
+              cpu: "200m"
+              memory: "128Mi"
