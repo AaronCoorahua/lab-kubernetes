@@ -1,0 +1,7 @@
+# Capturas del informe
+imagenes/
+
+# Python
+.venv/
+__pycache__/
+*.pyc

@@ -1,0 +1,10 @@
+# Clúster local con kind: mapea el NodePort 30080 a localhost:30080
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: lab-k8s
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 30080
+        protocol: TCP
