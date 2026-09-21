@@ -5,7 +5,7 @@ metadata:
   labels:
     app: flask
 spec:
-  replicas: 2                # Número deseado de Pods
+  replicas: 3                # Número deseado de Pods
   selector:
     matchLabels:
       app: flask             # Qué Pods gestiona este Deployment
